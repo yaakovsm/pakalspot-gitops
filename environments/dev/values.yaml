@@ -1,0 +1,133 @@
+# Development Environment Configuration
+# Optimized for local development and debugging
+
+app:
+  name: pakalspot
+  environment: development
+  namespace: pakalspot-dev
+
+# Frontend - Development optimized
+frontend:
+  replicaCount: 1
+  image:
+    repository: yaakovsm/pakalspot-frontend
+    tag: dev-${GITHUB_SHA:0:7}
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  env:
+    VITE_HOST: "0.0.0.0"
+    VITE_ALLOWED_HOSTS: "all"
+    VITE_API_URL: "/api"
+  envRuntime:
+    GOOGLE_MAPS_API_KEY: "AIzaSyCwCjeTEmRel_nG1MGsC5sacEFGuipEs8k"
+
+# Backend - Development optimized
+backend:
+  replicaCount: 1
+  image:
+    repository: yaakovsm/pakalspot-backend
+    tag: dev-${GITHUB_SHA:0:7}
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  env:
+    DEBUG: "true"
+    ENVIRONMENT: "development"
+    API_PREFIX: "/api"
+    S3_BUCKET: "pakalspot-photos-dev"
+
+# Database - Development optimized
+database:
+  enabled: true
+  type: postgresql
+  statefulSet:
+    enabled: true
+    replicaCount: 1
+  image:
+    repository: postgis/postgis
+    tag: "15-3.3"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    size: 10Gi
+    accessMode: ReadWriteOnce
+  config:
+    POSTGRES_DB: "pakalspot_db"
+    POSTGRES_PORT: "5432"
+
+# Secrets - Development (less secure for local dev)
+secrets:
+  database:
+    POSTGRES_USER: "pakalspot_user"
+    POSTGRES_PASSWORD: "jcoffeebrew"
+
+# Ingress - Development
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  hosts:
+    - host: pakalspot.local
+      paths:
+        - path: /api
+          pathType: Prefix
+          service: backend
+        - path: /media
+          pathType: Prefix
+          service: backend
+        - path: /
+          pathType: Prefix
+          service: frontend
+  tls:
+    enabled: false
+
+# Security - Development (relaxed)
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false  # Allow writes for debugging
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+      - ALL
+
+# No autoscaling in development
+autoscaling:
+  enabled: false

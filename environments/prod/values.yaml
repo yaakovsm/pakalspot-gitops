@@ -1,0 +1,156 @@
+# Production Environment Configuration
+# Optimized for security, performance, and high availability
+
+app:
+  name: pakalspot
+  environment: production
+  namespace: pakalspot-prod
+
+# Frontend - Production optimized
+frontend:
+  replicaCount: 3
+  image:
+    repository: yaakovsm/pakalspot-frontend
+    tag: v1.2.3  # Semantic versioning
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  env:
+    VITE_HOST: "0.0.0.0"
+    VITE_ALLOWED_HOSTS: "pakalspot.com"
+    VITE_API_URL: "/api"
+  envRuntime:
+    GOOGLE_MAPS_API_KEY: "AIzaSyCwCjeTEmRel_nG1MGsC5sacEFGuipEs8k"
+
+# Backend - Production optimized
+backend:
+  replicaCount: 3
+  image:
+    repository: yaakovsm/pakalspot-backend
+    tag: v1.2.3  # Semantic versioning
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    DEBUG: "false"
+    ENVIRONMENT: "production"
+    API_PREFIX: "/api"
+    S3_BUCKET: "pakalspot-photos-prod"
+
+# Database - Production optimized
+database:
+  enabled: true
+  type: postgresql
+  statefulSet:
+    enabled: true
+    replicaCount: 1
+  image:
+    repository: postgis/postgis
+    tag: "15-3.3"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClass: "fast-ssd"
+    accessMode: ReadWriteOnce
+  config:
+    POSTGRES_DB: "pakalspot_db"
+    POSTGRES_PORT: "5432"
+
+# Secrets - Production (secure)
+secrets:
+  database:
+    POSTGRES_USER: "pakalspot_user"
+    POSTGRES_PASSWORD: "production_secure_password"
+
+# Ingress - Production
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  hosts:
+    - host: pakalspot.com
+      paths:
+        - path: /api
+          pathType: Prefix
+          service: backend
+        - path: /media
+          pathType: Prefix
+          service: backend
+        - path: /
+          pathType: Prefix
+          service: frontend
+  tls:
+    enabled: true
+    secretName: pakalspot-tls
+    hosts:
+      - pakalspot.com
+
+# Security - Production (strict)
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+      - ALL
+
+# Autoscaling - Production
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Monitoring - Production
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+  grafana:
+    enabled: true
+
+# Network Policies - Production
+networkPolicy:
+  enabled: true
+  ingress: []
+  egress: []

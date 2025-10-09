@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pakalspot-application-set
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: dev
+            namespace: dev
+            branch: dev
+          - name: staging
+            namespace: staging
+            branch: staging
+          - name: prod
+            namespace: prod
+            branch: main
+  template:
+    metadata:
+      name: "pakalspot-{{name}}"
+      namespace: argocd
+    spec:
+      project: default
+      sources:
+        - repoURL: https://github.com/yaakovsm/pakalspot-application
+          targetRevision: HEAD
+          path: pakalspot-chart
+        - repoURL: https://github.com/yaakovsm/pakalspot-gitops
+          targetRevision: HEAD
+          ref: values
+          helm:
+            valueFiles:
+              - $values/shared/common-settings.yaml
+              - $values/environments/{{name}}/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

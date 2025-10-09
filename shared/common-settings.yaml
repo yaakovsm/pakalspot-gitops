@@ -1,0 +1,96 @@
+# Common Settings Only - True DRY Implementation
+# This file contains ONLY settings that are truly identical across all environments
+# Environment-specific requirements are kept in their respective environment files
+
+# Application metadata (same across all environments)
+app:
+  name: pakalspot
+
+# Common image repositories (same across all environments)
+frontend:
+  image:
+    repository: yaakovsm/pakalspot-frontend
+
+backend:
+  image:
+    repository: yaakovsm/pakalspot-backend
+
+# Common database configuration (same across all environments)
+database:
+  enabled: true
+  type: postgresql
+  statefulSet:
+    enabled: true
+  image:
+    repository: postgis/postgis
+    tag: "15-3.3"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+  config:
+    POSTGRES_DB: "pakalspot_db"
+    POSTGRES_PORT: "5432"
+
+# Common secrets structure (same across all environments)
+secrets:
+  database:
+    POSTGRES_USER: "pakalspot_user"
+
+# Common service configurations (same across all environments)
+frontend:
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+
+backend:
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+
+# Common environment variables (same across all environments)
+frontend:
+  env:
+    VITE_HOST: "0.0.0.0"
+    VITE_ALLOWED_HOSTS: "all"
+    VITE_API_URL: "/api"
+
+backend:
+  env:
+    API_PREFIX: "/api"
+
+# Common ingress structure (same across all environments)
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  hosts:
+    - paths:
+        - path: /api
+          pathType: Prefix
+          service: backend
+        - path: /media
+          pathType: Prefix
+          service: backend
+        - path: /
+          pathType: Prefix
+          service: frontend
+
+# Common security contexts (same across all environments)
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+      - ALL
