@@ -31,7 +31,7 @@ spec:
           ref: values
           helm:
             valueFiles:
-              - $values/shared/common-settings.yaml
+              - $values/common-settings.yaml
               - $values/environments/{{name}}/values.yaml
       destination:
         server: https://kubernetes.default.svc
