@@ -27,8 +27,8 @@ spec:
       project: default
       source:
         repoURL: https://github.com/yaakovsm/pakalspot-application
-        targetRevision: HEAD
-        path: pakalspot-application/pakalspot-chart
+        targetRevision: "{{branch}}"
+        path: pakalspot-chart
         helm:
           valueFiles:
             - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/HEAD/common-settings.yaml
