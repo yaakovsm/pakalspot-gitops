@@ -28,7 +28,7 @@ spec:
       source:
         repoURL: https://github.com/yaakovsm/pakalspot-application
         targetRevision: HEAD
-        path: pakalspot-chart
+        path: pakalspot-application/pakalspot-chart
         helm:
           valueFiles:
             - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/HEAD/common-settings.yaml
@@ -37,10 +37,5 @@ spec:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"
       syncPolicy:
-        {{- if eq .autoSync "true" }}
-        automated:
-          prune: true
-          selfHeal: true
-        {{- end }}
         syncOptions:
           - CreateNamespace=true
