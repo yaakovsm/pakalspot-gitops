@@ -8,14 +8,17 @@ spec:
     - list:
         elements:
           - name: dev
-            namespace: dev
+            namespace: pakalspot-dev
             branch: dev
+            autoSync: "true"
           - name: staging
-            namespace: staging
+            namespace: pakalspot-staging
             branch: staging
+            autoSync: "false"
           - name: prod
-            namespace: prod
+            namespace: pakalspot-prod
             branch: main
+            autoSync: "false"
   template:
     metadata:
       name: "pakalspot-{{name}}"
@@ -37,8 +40,10 @@ spec:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"
       syncPolicy:
+        {{- if eq .autoSync "true" }}
         automated:
           prune: true
           selfHeal: true
+        {{- end }}
         syncOptions:
           - CreateNamespace=true
