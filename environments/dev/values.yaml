@@ -31,7 +31,7 @@ frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-e5ec663
+    tag: dev-cc35f3b
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -56,7 +56,7 @@ backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-e5ec663
+    tag: dev-cc35f3b
     pullPolicy: Always
   service:
     type: ClusterIP
