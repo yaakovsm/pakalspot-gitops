@@ -32,10 +32,10 @@ spec:
         - repoURL: https://github.com/yaakovsm/pakalspot-gitops
           targetRevision: "{{branch}}"
           ref: gitops
-      helm:
-        valueFiles:
-          - $gitops/common-settings.yaml
-          - $gitops/environments/{{name}}/values.yaml
+          helm:
+            valueFiles:
+              - $gitops/common-settings.yaml
+              - $gitops/environments/{{name}}/values.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"
