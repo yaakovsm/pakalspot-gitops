@@ -6,6 +6,26 @@ app:
   environment: development
   namespace: pakalspot-dev
 
+# External Secrets Configuration
+externalSecrets:
+  enabled: true
+  refreshInterval: "1h"
+  github:
+    repository: "yaakovsm/pakalspot-application"
+  secrets:
+    DOCKER_USERNAME:
+      remoteKey: "DOCKER_USERNAME"
+    DOCKER_PASSWORD:
+      remoteKey: "DOCKER_PASSWORD"
+    JWT_SECRET_KEY:
+      remoteKey: "JWT_SECRET_KEY"
+    S3_ACCESS_KEY:
+      remoteKey: "S3_ACCESS_KEY"
+    S3_SECRET_KEY:
+      remoteKey: "S3_SECRET_KEY"
+    GOOGLE_MAPS_API_KEY:
+      remoteKey: "VITE_GOOGLE_MAPS_API_KEY"
+
 # Frontend - Development optimized
 frontend:
   replicaCount: 1
@@ -29,7 +49,7 @@ frontend:
     VITE_ALLOWED_HOSTS: "all"
     VITE_API_URL: "/api"
   envRuntime:
-    GOOGLE_MAPS_API_KEY: ""  # Will be injected from github-secrets secret
+    GOOGLE_MAPS_API_KEY: ""  # Will be injected from external secrets
 
 # Backend - Development optimized
 backend:
