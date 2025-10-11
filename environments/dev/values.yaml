@@ -28,7 +28,6 @@ frontend:
     VITE_HOST: "0.0.0.0"
     VITE_ALLOWED_HOSTS: "all"
     VITE_API_URL: "/api"
-  envRuntime:
     VITE_GOOGLE_MAPS_API_KEY: ""  # Will be injected from github-secrets secret
 
 # Backend - Development optimized
