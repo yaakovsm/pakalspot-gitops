@@ -31,8 +31,8 @@ spec:
         path: pakalspot-chart
         helm:
           valueFiles:
-            - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/HEAD/common-settings.yaml
-            - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/HEAD/environments/{{name}}/values.yaml
+            - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/{{branch}}/common-settings.yaml
+            - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/{{branch}}/environments/{{name}}/values.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"

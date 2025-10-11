@@ -10,7 +10,7 @@ This document outlines the DRY principles implemented in the PakalSpot project t
 - **Benefit**: No synchronization issues, single place to update configurations
 
 ### 2. **Common Settings Only**
-- **File**: `shared/common-settings.yaml`
+- **File**: common-settings.yaml`
 - **Purpose**: Contains ONLY settings that are truly identical across all environments
 - **Benefit**: Changes to truly common settings only need to be made once
 
@@ -53,12 +53,12 @@ sources:
     ref: values
       helm:
         valueFiles:
-          - $values/shared/common-settings.yaml      # Common settings first
+          - $values/common-settings.yaml      # Common settings first
           - $values/environments/{{name}}/values.yaml # Environment-specific requirements
 ```
 
 ### Value File Hierarchy
-1. **Common Settings**: `shared/common-settings.yaml` (truly common settings only)
+1. **Common Settings**: `common-settings.yaml` (truly common settings only)
 2. **Environment Requirements**: `environments/{env}/values.yaml` (environment-specific needs)
 3. **Helm Merging**: Environment values override common settings
 
