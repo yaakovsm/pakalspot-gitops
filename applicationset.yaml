@@ -25,14 +25,17 @@ spec:
       namespace: argocd
     spec:
       project: default
-      source:
-        repoURL: https://github.com/yaakovsm/pakalspot-application
-        targetRevision: "{{branch}}"
-        path: pakalspot-chart
-        helm:
-          valueFiles:
-            - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/common-settings.yaml
-            - https://raw.githubusercontent.com/yaakovsm/pakalspot-gitops/{{branch}}/environments/{{name}}/values.yaml
+      sources:
+        - repoURL: https://github.com/yaakovsm/pakalspot-application
+          targetRevision: "{{branch}}"
+          path: pakalspot-chart
+        - repoURL: https://github.com/yaakovsm/pakalspot-gitops
+          targetRevision: "{{branch}}"
+          ref: gitops
+      helm:
+        valueFiles:
+          - $gitops/common-settings.yaml
+          - $gitops/environments/{{name}}/values.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"
