@@ -35,7 +35,7 @@ backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev- f38bea3
+    tag: dev-f38bea3
     pullPolicy: Always
   service:
     type: ClusterIP
