@@ -11,7 +11,7 @@ frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-58bcefc
+    tag: dev-28051c5
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -36,7 +36,7 @@ backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-58bcefc
+    tag: dev-28051c5
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -114,16 +114,16 @@ ingress:
 
 # Security - Development (relaxed)
 podSecurityContext:
-  runAsNonRoot: false  # Allow nginx to run as root for cache directories
-  runAsUser: 0
-  runAsGroup: 0
-  fsGroup: 0
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
 
 securityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: false  # Allow writes for debugging
-  runAsNonRoot: false  # Allow nginx to run as root
-  runAsUser: 0
+  runAsNonRoot: true
+  runAsUser: 1000
   capabilities:
     drop:
       - ALL
