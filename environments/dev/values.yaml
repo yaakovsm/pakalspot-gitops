@@ -1,17 +1,12 @@
-# Development Environment Configuration
-# Optimized for local development and debugging
-
 app:
   name: pakalspot
   environment: development
   namespace: pakalspot-dev
-
-# Frontend - Development optimized
 frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-f38bea3
+    tag: dev-83163a8
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -25,17 +20,15 @@ frontend:
       cpu: 100m
       memory: 128Mi
   env:
-    VITE_HOST: "0.0.0.0"
-    VITE_ALLOWED_HOSTS: "all"
-    VITE_API_URL: "/api"
-    VITE_GOOGLE_MAPS_API_KEY: ""  # Will be injected from github-secrets secret
-
-# Backend - Development optimized
+    VITE_HOST: 0.0.0.0
+    VITE_ALLOWED_HOSTS: all
+    VITE_API_URL: /api
+    VITE_GOOGLE_MAPS_API_KEY: ''
 backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-f38bea3
+    tag: dev-83163a8
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -49,12 +42,10 @@ backend:
       cpu: 250m
       memory: 256Mi
   env:
-    DEBUG: "true"
-    ENVIRONMENT: "development"
-    API_PREFIX: "/api"
-    S3_BUCKET: "pakalspot-photos-dev"
-
-# Database - Development optimized
+    DEBUG: 'true'
+    ENVIRONMENT: development
+    API_PREFIX: /api
+    S3_BUCKET: pakalspot-photos-dev
 database:
   enabled: true
   type: postgresql
@@ -63,7 +54,7 @@ database:
     replicaCount: 1
   image:
     repository: postgis/postgis
-    tag: "15-3.3"
+    tag: 15-3.3
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -81,19 +72,15 @@ database:
     size: 10Gi
     accessMode: ReadWriteOnce
   config:
-    POSTGRES_DB: "pakalspot_db"
-    POSTGRES_PORT: "5432"
-
-# Secrets - Development (less secure for local dev)
+    POSTGRES_DB: pakalspot_db
+    POSTGRES_PORT: '5432'
 secrets:
   database:
-    POSTGRES_USER: "pakalspot_user"
-    POSTGRES_PASSWORD: "jcoffeebrew"
-
-# Ingress - Development
+    POSTGRES_USER: pakalspot_user
+    POSTGRES_PASSWORD: jcoffeebrew
 ingress:
   enabled: true
-  className: "traefik"
+  className: traefik
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
   hosts:
@@ -110,23 +97,18 @@ ingress:
           service: frontend
   tls:
     enabled: false
-
-# Security - Development (relaxed)
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 1000
   runAsGroup: 1000
   fsGroup: 1000
-
 securityContext:
   allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: false  # Allow writes for debugging
+  readOnlyRootFilesystem: false
   runAsNonRoot: true
   runAsUser: 1000
   capabilities:
     drop:
       - ALL
-
-# No autoscaling in development
 autoscaling:
   enabled: false
