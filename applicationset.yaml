@@ -30,7 +30,7 @@ spec:
           targetRevision: "{{branch}}"
           path: pakalspot-chart
         - repoURL: https://github.com/yaakovsm/pakalspot-gitops
-          targetRevision: "{{branch}}"
+          targetRevision: main
           ref: gitops
           helm:
             valueFiles:
