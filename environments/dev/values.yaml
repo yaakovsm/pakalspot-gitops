@@ -6,7 +6,7 @@ frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-3e61ca2
+    tag: dev-810ca5b
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -24,12 +24,12 @@ frontend:
     VITE_ALLOWED_HOSTS: all
     VITE_API_URL: /api
   envRuntime:
-    VITE_GOOGLE_MAPS_API_KEY: ""
+    VITE_GOOGLE_MAPS_API_KEY: ''
 backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-3e61ca2
+    tag: dev-810ca5b
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -80,9 +80,9 @@ secrets:
     POSTGRES_USER: pakalspot_user
     POSTGRES_PASSWORD: jcoffeebrew
   backend:
-    SECRET_KEY: "dev-secret-key-change-in-production"
-    S3_ACCESS_KEY: "dev-s3-access-key"
-    S3_SECRET_KEY: "dev-s3-secret-key"
+    SECRET_KEY: dev-secret-key-change-in-production
+    S3_ACCESS_KEY: dev-s3-access-key
+    S3_SECRET_KEY: dev-s3-secret-key
 ingress:
   enabled: true
   className: traefik
