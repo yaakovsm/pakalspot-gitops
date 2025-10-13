@@ -2,15 +2,14 @@ app:
   name: pakalspot
   environment: dev
   namespace: pakalspot-dev
-
 global:
   image:
-    tag: "dev-3e61ca2"
+    tag: dev-3e61ca2
 frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-836381b
+    tag: dev-142650d
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -33,7 +32,7 @@ backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-836381b
+    tag: dev-142650d
     pullPolicy: Always
   service:
     type: ClusterIP
