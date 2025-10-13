@@ -6,12 +6,16 @@ app:
   environment: staging
   namespace: pakalspot-staging
 
+global:
+  image:
+    tag: "dev-PLACEHOLDER"
+
 # Frontend - Staging optimized
 frontend:
   replicaCount: 2
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-PLACEHOLDER
+    tag: null      # use global tag if your templates support it
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -36,7 +40,7 @@ backend:
   replicaCount: 2
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-PLACEHOLDER
+    tag: null      # use global tag if your templates support it
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP

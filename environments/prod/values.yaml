@@ -6,12 +6,16 @@ app:
   environment: production
   namespace: pakalspot-prod
 
+global:
+  image:
+    tag: "v1.2.3"
+
 # Frontend - Production optimized
 frontend:
   replicaCount: 3
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: v1.2.3  # Semantic versioning
+    tag: null      # use global tag if your templates support it
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -36,7 +40,7 @@ backend:
   replicaCount: 3
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: v1.2.3  # Semantic versioning
+    tag: null      # use global tag if your templates support it
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
