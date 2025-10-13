@@ -1,6 +1,6 @@
 app:
   name: pakalspot
-  environment: development
+  environment: dev
   namespace: pakalspot-dev
 
 global:
@@ -79,14 +79,6 @@ database:
   config:
     POSTGRES_DB: pakalspot_db
     POSTGRES_PORT: '5432'
-secrets:
-  database:
-    POSTGRES_USER: pakalspot_user
-    POSTGRES_PASSWORD: jcoffeebrew
-  backend:
-    SECRET_KEY: "dev-secret-key-change-in-production"
-    S3_ACCESS_KEY: "dev-s3-access-key"
-    S3_SECRET_KEY: "dev-s3-secret-key"
 ingress:
   enabled: true
   className: traefik
