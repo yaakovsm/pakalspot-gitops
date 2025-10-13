@@ -50,6 +50,7 @@ backend:
     ENVIRONMENT: development
     API_PREFIX: /api
     S3_BUCKET: pakalspot-photos-dev
+    BASE_URL: http://pakalspot.local
 database:
   enabled: true
   type: postgresql
