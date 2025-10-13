@@ -90,3 +90,28 @@ If you're migrating from individual ArgoCD applications:
 - Check ApplicationSet status: `kubectl describe applicationset pakalspot-application-set -n argocd`
 - Check individual applications: `kubectl get applications -n argocd`
 - View ArgoCD UI: `kubectl port-forward svc/argocd-server -n argocd 8080:443`
+
+## External Secrets quick validation
+
+```bash
+# ESO ready
+kubectl -n external-secrets get pods
+
+# ExternalSecret resources sync
+kubectl -n pakalspot-dev get externalsecret
+
+# Secrets created by ESO
+kubectl -n pakalspot-dev get secret pakalspot-backend-secrets -o yaml
+kubectl -n pakalspot-dev get secret pakalspot-frontend-env -o yaml
+
+# Frontend runtime file present
+kubectl -n pakalspot-dev exec -it deploy/<frontend-deploy-name> -- ls -l /usr/share/nginx/html | grep env-config.js
+```
+
+In the browser devtools console:
+
+```javascript
+window.__ENV
+```
+
+Should show the Maps key and API_URL.
