@@ -28,14 +28,14 @@ spec:
       sources:
         - repoURL: https://github.com/yaakovsm/pakalspot-gitops
           targetRevision: main
-          ref: gitops
+          ref: gitops 
+        - repoURL: https://github.com/yaakovsm/pakalspot-application
+          targetRevision: "{{branch}}"
+          path: pakalspot-chart
           helm:
             valueFiles:
               - $gitops/common-settings.yaml
-              - $gitops/environments/{{name}}/values.yaml
-        - repoURL: https://github.com/yaakovsm/pakalspot-application
-          targetRevision: "{{branch}}"
-          path: pakalspot-chart      
+              - $gitops/environments/{{name}}/values.yaml    
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"
