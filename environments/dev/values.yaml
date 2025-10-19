@@ -9,7 +9,7 @@ frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-c91a420
+    tag: dev-4cf6b49
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -36,7 +36,7 @@ backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-c91a420
+    tag: dev-4cf6b49
     pullPolicy: Always
   service:
     type: ClusterIP
