@@ -22,10 +22,6 @@ frontend:
     requests:
       cpu: 100m
       memory: 128Mi
-  podAnnotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/port: '80'
-    prometheus.io/path: /metrics
   env:
     VITE_HOST: 0.0.0.0
     VITE_ALLOWED_HOSTS: all
