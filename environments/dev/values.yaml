@@ -4,7 +4,7 @@ app:
   namespace: pakalspot-dev
 global:
   image:
-    tag: dev-3e61ca2
+    tag: dev-8c6a3d3
 frontend:
   replicaCount: 1
   image:
