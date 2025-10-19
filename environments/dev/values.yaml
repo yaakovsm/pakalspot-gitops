@@ -9,7 +9,7 @@ frontend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-frontend
-    tag: dev-633fa2c
+    tag: dev-c91a420
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -23,9 +23,9 @@ frontend:
       cpu: 100m
       memory: 128Mi
   podAnnotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "80"
-    prometheus.io/path: "/metrics"
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '80'
+    prometheus.io/path: /metrics
   env:
     VITE_HOST: 0.0.0.0
     VITE_ALLOWED_HOSTS: all
@@ -36,7 +36,7 @@ backend:
   replicaCount: 1
   image:
     repository: yaakovsm/pakalspot-backend
-    tag: dev-633fa2c
+    tag: dev-c91a420
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -50,9 +50,9 @@ backend:
       cpu: 250m
       memory: 256Mi
   podAnnotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "8000"
-    prometheus.io/path: "/metrics"
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8000'
+    prometheus.io/path: /metrics
   env:
     DEBUG: 'true'
     ENVIRONMENT: development
