@@ -1,0 +1,53 @@
+# Persistence & retention
+prometheus:
+  prometheusSpec:
+    retention: 15d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 8Gi
+
+# Grafana configuration
+grafana:
+  adminUser: admin
+  adminPassword: admin
+  service:
+    type: ClusterIP
+    port: 80
+  persistence:
+    enabled: true
+    size: 2Gi
+  defaultDashboardsTimezone: browser
+
+  # Add automatic Prometheus datasource
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local
+
+  # Optionally, expose via Ingress (can be used later on AWS)
+  ingress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - grafana.local
+    tls: []
+
+# Disable node exporter for local environments (like WSL)
+prometheus-node-exporter:
+  enabled: false
+
+# Kube State Metrics
+kube-state-metrics:
+  enabled: true
+
+# Alertmanager
+alertmanager:
+  enabled: true
+  alertmanagerSpec:
+    replicas: 1
