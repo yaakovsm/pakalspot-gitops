@@ -5,7 +5,8 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  spec:
+spec:
+  project: default
   sources:
     - repoURL: https://github.com/yaakovsm/pakalspot-gitops.git
       targetRevision: main
@@ -17,8 +18,8 @@ metadata:
         valueFiles:
           - $values/monitoring/values-kube-prometheus-stack.yaml
   destination:
-    namespace: monitoring
     server: https://kubernetes.default.svc
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true
