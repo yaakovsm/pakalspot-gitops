@@ -21,6 +21,72 @@ grafana:
     enabled: true
     size: 2Gi
   defaultDashboardsTimezone: browser
+  dashboards:
+    default:
+      pakalspot-backend:
+        json: |
+          {
+            "id": null,
+            "uid": "pakalspot-backend",
+            "title": "PakalSpot Backend Monitoring",
+            "timezone": "browser",
+            "schemaVersion": 38,
+            "version": 1,
+            "refresh": "30s",
+            "panels": [
+              {
+                "type": "timeseries",
+                "title": "CPU Usage (%)",
+                "targets": [
+                  {
+                    "expr": "rate(process_cpu_seconds_total{job=\"pakalspot-backend\"}[1m]) * 100",
+                    "legendFormat": "CPU"
+                  }
+                ]
+              },
+              {
+                "type": "timeseries",
+                "title": "Memory Usage (MB)",
+                "targets": [
+                  {
+                    "expr": "process_resident_memory_bytes{job=\"pakalspot-backend\"} / 1024 / 1024",
+                    "legendFormat": "Memory"
+                  }
+                ]
+              },
+              {
+                "type": "timeseries",
+                "title": "Request Rate (req/s)",
+                "targets": [
+                  {
+                    "expr": "rate(http_requests_total{job=\"pakalspot-backend\"}[1m])",
+                    "legendFormat": "Requests/sec"
+                  }
+                ]
+              },
+              {
+                "type": "timeseries",
+                "title": "Error Rate (non-2xx)",
+                "targets": [
+                  {
+                    "expr": "rate(http_requests_total{job=\"pakalspot-backend\",status!~\"2..\"}[5m])",
+                    "legendFormat": "Errors/sec"
+                  }
+                ]
+              },
+              {
+                "type": "timeseries",
+                "title": "Average Response Time (s)",
+                "targets": [
+                  {
+                    "expr": "rate(http_request_duration_seconds_sum{job=\"pakalspot-backend\"}[5m]) / rate(http_request_duration_seconds_count{job=\"pakalspot-backend\"}[5m])",
+                    "legendFormat": "Latency"
+                  }
+                ]
+              }
+            ]
+          }
+
 
   # Add automatic Prometheus datasource
   additionalDataSources:
