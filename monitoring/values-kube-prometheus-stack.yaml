@@ -21,6 +21,22 @@ grafana:
     enabled: true
     size: 2Gi
   defaultDashboardsTimezone: browser
+
+
+  # Add automatic Prometheus datasource
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      folder: /tmp/dashboards
+
+
   dashboards:
     default:
       pakalspot-backend:
