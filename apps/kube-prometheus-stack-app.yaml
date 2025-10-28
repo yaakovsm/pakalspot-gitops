@@ -15,6 +15,7 @@ spec:
       chart: kube-prometheus-stack
       targetRevision: 65.*
       helm:
+        skipCrds: true
         valueFiles:
           - $values/monitoring/values-kube-prometheus-stack.yaml
   destination:
@@ -26,4 +27,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - SkipCrds=true
