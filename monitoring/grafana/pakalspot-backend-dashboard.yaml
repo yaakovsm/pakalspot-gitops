@@ -36,16 +36,7 @@ data:
             }
           ]
         },
-        {
-          "type": "timeseries",
-          "title": "Request Rate (req/s)",
-          "targets": [
-            {
-              "expr": "sum(rate(http_request_duration_seconds_count{job=\"backend\"}[1m]))",
-              "legendFormat": "Requests/sec"
-            }
-          ]
-        },
+      
         {
           "type": "timeseries",
           "title": "Error Rate (non-2xx)",
@@ -86,15 +77,5 @@ data:
             }
           ]
         },
-        {
-          "type": "timeseries",
-          "title": "Error Percentage (4xx+5xx, %)",
-          "targets": [
-            {
-              "expr": "100 * ((sum(rate(http_requests_total{status=~\"5..\"}[5m])) + sum(rate(http_requests_total{status=~\"4..\"}[5m])))/sum(rate(http_requests_total[5m])))",
-              "legendFormat": "Error %"
-            }
-          ]
-        }
       ]
     }
