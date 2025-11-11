@@ -1,5 +1,5 @@
 alertmanager:
-  enabled: false
+  enabled: true
 
 pushgateway:
   enabled: false
@@ -14,6 +14,11 @@ server:
   service:
     type: ClusterIP
     port: 9090
+  alertingEndpoints:
+    - name: alertmanager
+      namespace: monitoring
+      service: prometheus-alertmanager
+      port: 9093
 
 serverFiles:
   prometheus.yml:
@@ -28,3 +33,24 @@ serverFiles:
         static_configs:
           - targets:
               - 'prometheus-kube-state-metrics.monitoring.svc.cluster.local:8080'
+  alerts:
+    groups:
+    - name: resource-alerts
+      rules:
+      - alert: HighNodeCPU
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "Node CPU usage > 85% for 5 minutes."
+
+      - alert: HighNodeMemory
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Memory usage on {{ $labels.instance }}"
+          description: "Node memory usage > 85% for 5 minutes."
