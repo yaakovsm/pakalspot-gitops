@@ -1,19 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-dashboards
+  name: grafana
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://grafana.github.io/helm-charts
-    chart: grafana
-    targetRevision: 7.3.0
-    helm:
-      valueFiles:
-        - $values/monitoring/grafana/values.yaml
+  sources:
+    - repoURL: https://github.com/yaakovsm/pakalspot-gitops.git
+      targetRevision: main
+      ref: values
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: grafana
+      targetRevision: 7.3.0
+      helm:
+        valueFiles:
+          - $values/monitoring/grafana/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
