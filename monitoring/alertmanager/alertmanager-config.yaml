@@ -14,5 +14,11 @@ data:
       repeat_interval: 1h
     receivers:
       - name: "default"
-        webhook_configs:
-          - url: "http://alertmanager.monitoring.svc.cluster.local:9093/api/v2/alerts"
+        # Remove the self-referencing webhook
+        # Add your actual notification channels here when ready:
+        # webhook_configs:
+        #   - url: "http://your-webhook-service.com/alerts"
+        # email_configs:
+        #   - to: "alerts@example.com"
+        #     from: "alertmanager@example.com"
+        #     smarthost: "smtp.example.com:587"
