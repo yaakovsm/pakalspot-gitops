@@ -32,6 +32,14 @@ dashboardProviders:
         options:
           path: /var/lib/grafana/dashboards
 
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    folder: /tmp/dashboards
+    searchNamespace: monitoring          
+
 dashboards:
   default:
     node-exporter-full:
