@@ -8,15 +8,15 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://github.com/yaakovsm/pakalspot-gitops.git
-      targetRevision: main
-      ref: values
     - repoURL: https://grafana.github.io/helm-charts
       chart: grafana
       targetRevision: 7.3.0
       helm:
         valueFiles:
           - $values/monitoring/grafana/values.yaml
+    - repoURL: https://github.com/yaakovsm/pakalspot-gitops.git
+      targetRevision: main
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
