@@ -21,7 +21,7 @@ data:
           "title": "CPU Usage (%)",
           "targets": [
             {
-              "expr": "rate(process_cpu_seconds_total{job=\"pakalspot-backend\"}[1m]) * 100",
+              "expr": "rate(process_cpu_seconds_total{job=\"backend\"}[1m]) * 100",
               "legendFormat": "CPU"
             }
           ]
@@ -31,7 +31,7 @@ data:
           "title": "Memory Usage (MB)",
           "targets": [
             {
-              "expr": "process_resident_memory_bytes{job=\"pakalspot-backend\"} / 1024 / 1024",
+              "expr": "process_resident_memory_bytes{job=\"backend\"} / 1024 / 1024",
               "legendFormat": "Memory"
             }
           ]
@@ -41,7 +41,7 @@ data:
           "title": "Request Rate (req/s)",
           "targets": [
             {
-              "expr": "rate(http_requests_total{job=\"pakalspot-backend\"}[1m])",
+              "expr": "rate(http_requests_total{job=\"backend\"}[1m])",
               "legendFormat": "Requests/sec"
             }
           ]
@@ -51,7 +51,7 @@ data:
           "title": "Error Rate (non-2xx)",
           "targets": [
             {
-              "expr": "rate(http_requests_total{job=\"pakalspot-backend\",status!~\"2..\"}[5m])",
+              "expr": "rate(http_requests_total{job=\"backend\",status!~\"2..\"}[5m])",
               "legendFormat": "Errors/sec"
             }
           ]
@@ -61,7 +61,7 @@ data:
           "title": "Average Response Time (s)",
           "targets": [
             {
-              "expr": "rate(http_request_duration_seconds_sum{job=\"pakalspot-backend\"}[5m]) / rate(http_request_duration_seconds_count{job=\"pakalspot-backend\"}[5m])",
+              "expr": "rate(http_request_duration_seconds_sum{job=\"backend\"}[5m]) / rate(http_request_duration_seconds_count{job=\"backend\"}[5m])",
               "legendFormat": "Latency"
             }
           ]
