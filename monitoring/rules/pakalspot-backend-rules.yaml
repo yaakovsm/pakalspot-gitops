@@ -1,10 +1,8 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: pakalspot-backend-alerts
+  name: pakalspot-backend-rules
   namespace: monitoring
-  labels:
-    release: kube-prometheus-stack
 spec:
   groups:
     - name: pakalspot-backend.rules

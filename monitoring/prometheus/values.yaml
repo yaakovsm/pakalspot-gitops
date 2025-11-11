@@ -1,0 +1,30 @@
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+server:
+  persistentVolume:
+    enabled: true
+    size: 5Gi
+  service:
+    type: ClusterIP
+    port: 9090
+
+serverFiles:
+  prometheus.yml:
+    scrape_configs:
+      - job_name: 'backend'
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+              - 'pakalspot-dev-pakalspot-chart-backend.pakalspot-dev.svc.cluster.local:80'
+
+      - job_name: 'kube-state-metrics'
+        static_configs:
+          - targets:
+              - 'prometheus-kube-state-metrics.monitoring.svc.cluster.local:8080'

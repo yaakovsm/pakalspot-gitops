@@ -8,9 +8,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/yaakovsm/pakalspot-gitops.git
-    targetRevision: main
-    path: monitoring/dashboards
+    repoURL: https://grafana.github.io/helm-charts
+    chart: grafana
+    targetRevision: 7.3.0
+    helm:
+      valueFiles:
+        - $values/monitoring/grafana/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -19,4 +22,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=false
+      - CreateNamespace=true
