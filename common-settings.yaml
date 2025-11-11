@@ -56,17 +56,8 @@ ingress:
   className: "traefik"
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
-  hosts:
-    - paths:
-        - path: /api
-          pathType: Prefix
-          service: backend
-        - path: /media
-          pathType: Prefix
-          service: backend
-        - path: /
-          pathType: Prefix
-          service: frontend
+  # Note: hosts array is defined per-environment since each environment has a different hostname
+  # Paths are duplicated in each environment file due to Helm's array replacement behavior
 
 podSecurityContext:
   runAsNonRoot: true
