@@ -13,7 +13,7 @@ data:
       "title": "PakalSpot Backend Monitoring",
       "timezone": "browser",
       "schemaVersion": 38,
-      "version": 1,
+      "version": 2,
       "refresh": "30s",
       "panels": [
         {
@@ -21,7 +21,7 @@ data:
           "title": "CPU Usage (%)",
           "targets": [
             {
-              "expr": "rate(process_cpu_seconds_total{job=\"backend\"}[5m]) * 100"
+              "expr": "rate(process_cpu_seconds_total{job=\"backend\"}[5m]) * 100",
               "legendFormat": "CPU - {{pod}}"
             }
           ]
@@ -63,6 +63,36 @@ data:
             {
               "expr": "sum(rate(http_request_duration_seconds_sum{job=\"backend\"}[5m])) / sum(rate(http_request_duration_seconds_count{job=\"backend\"}[5m]))",
               "legendFormat": "Latency"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Total Request Rate (5m avg)",
+          "targets": [
+            {
+              "expr": "sum(rate(http_requests_total[5m]))",
+              "legendFormat": "Requests (5m avg)"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Average Request Duration (s, 5m avg)",
+          "targets": [
+            {
+              "expr": "sum(rate(http_request_duration_seconds_sum[5m])) / sum(rate(http_request_duration_seconds_count[5m]))",
+              "legendFormat": "Duration (avg)"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Error Percentage (4xx+5xx, %)",
+          "targets": [
+            {
+              "expr": "100 * ((sum(rate(http_requests_total{status=~\"5..\"}[5m])) + sum(rate(http_requests_total{status=~\"4..\"}[5m])))/sum(rate(http_requests_total[5m])))",
+              "legendFormat": "Error %"
             }
           ]
         }
