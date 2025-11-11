@@ -1,8 +1,8 @@
 # Staging Environment Configuration
 # Production-like but with testing capabilities
+# Only environment-specific overrides - common settings are in common-settings.yaml
 
 app:
-  name: pakalspot
   environment: staging
   namespace: pakalspot-staging
 
@@ -10,17 +10,11 @@ global:
   image:
     tag: "dev-PLACEHOLDER"
 
-# Frontend - Staging optimized
 frontend:
   replicaCount: 2
   image:
-    repository: yaakovsm/pakalspot-frontend
     tag: null      # use global tag if your templates support it
     pullPolicy: IfNotPresent
-  service:
-    type: ClusterIP
-    port: 80
-    targetPort: 80
   resources:
     limits:
       cpu: 300m
@@ -28,24 +22,12 @@ frontend:
     requests:
       cpu: 150m
       memory: 192Mi
-  env:
-    VITE_HOST: "0.0.0.0"
-    VITE_ALLOWED_HOSTS: "all"
-    VITE_API_URL: "/api"
-  envRuntime:
-    VITE_GOOGLE_MAPS_API_KEY: ""  # Will be injected from github-secrets secret
 
-# Backend - Staging optimized
 backend:
   replicaCount: 2
   image:
-    repository: yaakovsm/pakalspot-backend
     tag: null      # use global tag if your templates support it
     pullPolicy: IfNotPresent
-  service:
-    type: ClusterIP
-    port: 80
-    targetPort: 8000
   resources:
     limits:
       cpu: 750m
@@ -56,24 +38,11 @@ backend:
   env:
     DEBUG: "false"
     ENVIRONMENT: "staging"
-    API_PREFIX: "/api"
     S3_BUCKET: "pakalspot-photos-staging"
 
-# Database - Staging optimized
 database:
-  enabled: true
-  type: postgresql
   statefulSet:
-    enabled: true
     replicaCount: 1
-  image:
-    repository: postgis/postgis
-    tag: "15-3.3"
-    pullPolicy: IfNotPresent
-  service:
-    type: ClusterIP
-    port: 5432
-    targetPort: 5432
   resources:
     limits:
       cpu: 750m
@@ -85,57 +54,23 @@ database:
     enabled: true
     size: 20Gi
     accessMode: ReadWriteOnce
-  config:
-    POSTGRES_DB: "pakalspot_db"
-    POSTGRES_PORT: "5432"
 
-# Secrets - Staging
 secrets:
   database:
-    POSTGRES_USER: "pakalspot_user"
     POSTGRES_PASSWORD: "staging_password_secure"
 
-# Ingress - Staging
 ingress:
-  enabled: true
-  className: "traefik"
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
   hosts:
     - host: staging.pakalspot.com
-      paths:
-        - path: /api
-          pathType: Prefix
-          service: backend
-        - path: /media
-          pathType: Prefix
-          service: backend
-        - path: /
-          pathType: Prefix
-          service: frontend
   tls:
     enabled: true
     secretName: pakalspot-staging-tls
     hosts:
       - staging.pakalspot.com
 
-# Security - Staging (production-like)
-podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
-
 securityContext:
-  allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
-  capabilities:
-    drop:
-      - ALL
 
-# Autoscaling - Staging
 autoscaling:
   enabled: true
   minReplicas: 2

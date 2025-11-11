@@ -1,20 +1,19 @@
+# Development Environment Configuration
+# Only environment-specific overrides - common settings are in common-settings.yaml
+
 app:
-  name: pakalspot
   environment: dev
   namespace: pakalspot-dev
+
 global:
   image:
     tag: dev-8c6a3d3
+
 frontend:
   replicaCount: 1
   image:
-    repository: yaakovsm/pakalspot-frontend
     tag: dev-01d5217
     pullPolicy: Always
-  service:
-    type: ClusterIP
-    port: 80
-    targetPort: 80
   resources:
     limits:
       cpu: 200m
@@ -22,22 +21,12 @@ frontend:
     requests:
       cpu: 100m
       memory: 128Mi
-  env:
-    VITE_HOST: 0.0.0.0
-    VITE_ALLOWED_HOSTS: all
-    VITE_API_URL: /api
-  envRuntime:
-    VITE_GOOGLE_MAPS_API_KEY: ''
+
 backend:
   replicaCount: 1
   image:
-    repository: yaakovsm/pakalspot-backend
     tag: dev-01d5217
     pullPolicy: Always
-  service:
-    type: ClusterIP
-    port: 80
-    targetPort: 8000
   resources:
     limits:
       cpu: 500m
@@ -52,23 +41,12 @@ backend:
   env:
     DEBUG: 'true'
     ENVIRONMENT: development
-    API_PREFIX: /api
     S3_BUCKET: pakalspot-photos-dev
     BASE_URL: http://pakalspot.local
+
 database:
-  enabled: true
-  type: postgresql
   statefulSet:
-    enabled: true
     replicaCount: 1
-  image:
-    repository: postgis/postgis
-    tag: 15-3.3
-    pullPolicy: IfNotPresent
-  service:
-    type: ClusterIP
-    port: 5432
-    targetPort: 5432
   resources:
     limits:
       cpu: 500m
@@ -80,40 +58,15 @@ database:
     enabled: true
     size: 10Gi
     accessMode: ReadWriteOnce
-  config:
-    POSTGRES_DB: pakalspot_db
-    POSTGRES_PORT: '5432'
+
 ingress:
-  enabled: true
-  className: traefik
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
   hosts:
     - host: pakalspot.local
-      paths:
-        - path: /api
-          pathType: Prefix
-          service: backend
-        - path: /media
-          pathType: Prefix
-          service: backend
-        - path: /
-          pathType: Prefix
-          service: frontend
   tls:
     enabled: false
-podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
+
 securityContext:
-  allowPrivilegeEscalation: false
   readOnlyRootFilesystem: false
-  runAsNonRoot: true
-  runAsUser: 1000
-  capabilities:
-    drop:
-      - ALL
+
 autoscaling:
   enabled: false
