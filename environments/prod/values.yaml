@@ -67,6 +67,16 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls: "true"
   hosts:
     - host: pakalspot.com
+      paths:
+        - path: /api
+          pathType: Prefix
+          service: backend
+        - path: /media
+          pathType: Prefix
+          service: backend
+        - path: /
+          pathType: Prefix
+          service: frontend
   tls:
     enabled: true
     secretName: pakalspot-tls
