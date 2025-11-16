@@ -1,18 +1,13 @@
-# Development Environment Configuration
-# Only environment-specific overrides - common settings are in common-settings.yaml
-
 app:
   environment: dev
   namespace: pakalspot-dev
-
 global:
   image:
     tag: dev-8c6a3d3
-
 frontend:
   replicaCount: 1
   image:
-    tag: dev-01d5217
+    tag: dev-b70b625
     pullPolicy: Always
   resources:
     limits:
@@ -21,11 +16,10 @@ frontend:
     requests:
       cpu: 100m
       memory: 128Mi
-
 backend:
   replicaCount: 1
   image:
-    tag: dev-01d5217
+    tag: dev-b70b625
     pullPolicy: Always
   resources:
     limits:
@@ -43,7 +37,6 @@ backend:
     ENVIRONMENT: development
     S3_BUCKET: pakalspot-photos-dev
     BASE_URL: http://pakalspot.local
-
 database:
   statefulSet:
     replicaCount: 1
@@ -58,7 +51,6 @@ database:
     enabled: true
     size: 10Gi
     accessMode: ReadWriteOnce
-
 ingress:
   hosts:
     - host: pakalspot.local
@@ -74,9 +66,7 @@ ingress:
           service: frontend
   tls:
     enabled: false
-
 securityContext:
   readOnlyRootFilesystem: false
-
 autoscaling:
   enabled: false
