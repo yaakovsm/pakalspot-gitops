@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: dev-f689f5f
+    tag: dev-f5b0668
     pullPolicy: Always
   resources:
     limits:
@@ -19,7 +19,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: dev-f689f5f
+    tag: dev-f5b0668
     pullPolicy: Always
   resources:
     limits:
