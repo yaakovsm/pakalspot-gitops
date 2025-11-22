@@ -1,6 +1,7 @@
 # Staging Environment Configuration
 # Production-like but with testing capabilities
 # Only environment-specific overrides - common settings are in common-settings.yaml
+# Chart defaults are in pakalspot-chart/values.yaml
 
 app:
   environment: staging
@@ -13,7 +14,7 @@ global:
 frontend:
   replicaCount: 2
   image:
-    tag: null      # use global tag if your templates support it
+    tag: null
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -22,11 +23,13 @@ frontend:
     requests:
       cpu: 150m
       memory: 192Mi
+  env:
+    VITE_ALLOWED_HOSTS: "staging.pakalspot.com"
 
 backend:
   replicaCount: 2
   image:
-    tag: null      # use global tag if your templates support it
+    tag: null
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -83,7 +86,32 @@ securityContext:
 
 autoscaling:
   enabled: true
-  minReplicas: 2
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 75
-  targetMemoryUtilizationPercentage: 80
+  frontend:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 80
+  backend:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: true
+  frontend:
+    enabled: true
+    minAvailable: 1
+  backend:
+    enabled: true
+    minAvailable: 1
+
+networkPolicy:
+  enabled: true
+
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
