@@ -16,7 +16,7 @@ spec:
       serviceAccountName: pakalspot-backend
       containers:
         - name: pakalspot-seeder
-          image: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-backend
+          image: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-backend:dev-6f8fa47
           imagePullPolicy: IfNotPresent
           command: ["python", "-m", "app.db.seed_cloud"]
           env:

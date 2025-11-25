@@ -50,7 +50,7 @@ secrets:
   database:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
-  enabled: false
+  enabled: true
 securityContext:
   readOnlyRootFilesystem: false
 autoscaling:
