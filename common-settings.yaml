@@ -4,8 +4,7 @@
 
 # Global configuration
 global:
-  imagePullSecrets:
-    - name: ghcr-pull
+  imagePullSecrets: [] 
 
 # Application metadata (same across all environments)
 app:
@@ -15,7 +14,7 @@ app:
 frontend:
   enabled: true
   image:
-    repository: yaakovsm/pakalspot-frontend
+    repository: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-frontend
   service:
     type: ClusterIP
     port: 80
@@ -61,7 +60,7 @@ frontend:
 backend:
   enabled: true
   image:
-    repository: yaakovsm/pakalspot-backend
+    repository: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-backend
   service:
     type: ClusterIP
     port: 80

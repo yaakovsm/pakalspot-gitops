@@ -3,7 +3,7 @@ app:
   namespace: pakalspot-dev
 global:
   image:
-    tag: dev-8c6a3d3
+    tag: ""
 frontend:
   replicaCount: 1
   image:
@@ -42,22 +42,23 @@ backend:
   env:
     DEBUG: 'true'
     ENVIRONMENT: development
-    S3_BUCKET: pakalspot-photos-dev
+    S3_BUCKET: pakalspot-photos
     BASE_URL: http://pakalspot.local
 database:
-  statefulSet:
-    replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 1Gi
-    requests:
-      cpu: 250m
-      memory: 512Mi
-  persistence:
-    enabled: true
-    size: 10Gi
-    accessMode: ReadWriteOnce
+  enabled: false
+#  statefulSet:
+#    replicaCount: 1
+#  resources:
+#    limits:
+#      cpu: 500m
+#      memory: 1Gi
+#    requests:
+#      cpu: 250m
+#      memory: 512Mi
+#  persistence:
+#    enabled: true
+#    size: 10Gi
+#    accessMode: ReadWriteOnce
 secrets:
   database:
     POSTGRES_PASSWORD: dev_password_secure
