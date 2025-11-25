@@ -51,11 +51,14 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: true
+podSecurityContext: {}
 securityContext:
   readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: true
   capabilities:
     add:
       - NET_BIND_SERVICE
+
 autoscaling:
   enabled: false
 podDisruptionBudget:
