@@ -64,22 +64,6 @@ secrets:
   database:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
-<<<<<<< HEAD
-  hosts:
-    - host: pakalspot.local
-      paths:
-        - path: /api
-          pathType: Prefix
-          service: backend
-        - path: /media
-          pathType: Prefix
-          service: backend
-        - path: /
-          pathType: Prefix
-          service: frontend
-  tls:
-    enabled: false
-=======
   enabled: false
   # Ingress disabled - using API Gateway + NLB pattern instead
   # hosts:
@@ -97,7 +81,6 @@ ingress:
   # tls:
   #   enabled: false
 
->>>>>>> 9413533 (moving to aws)
 securityContext:
   readOnlyRootFilesystem: false
 autoscaling:
