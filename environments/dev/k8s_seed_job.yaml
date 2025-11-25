@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pakalspot-seed-job
+  namespace: pakalspot-dev
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: pakalspot-seed-job
+    spec:
+      restartPolicy: Never
+      serviceAccountName: pakalspot-backend
+      containers:
+        - name: pakalspot-seeder
+          image: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-backend
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-m", "app.db.seed_cloud"]
+          env:
+            - name: BACKEND_BASE_URL
+              # backend service inside cluster (path includes /api)
+              value: "http://pakalspot-backend.pakalspot-dev.svc.cluster.local/api"
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: pakalspot-backend-secrets
+                  key: ADMIN_EMAIL
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pakalspot-backend-secrets
+                  key: ADMIN_PASSWORD
+            - name: SEED_IMAGE_DIR
+              value: "/app/seed_images"
