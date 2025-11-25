@@ -3,11 +3,11 @@ app:
   namespace: pakalspot-dev
 global:
   image:
-    tag: ""
+    tag: ''
 frontend:
   replicaCount: 1
   image:
-    tag: dev-2798833
+    tag: dev-6f8fa47
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: dev-2798833
+    tag: dev-6f8fa47
     pullPolicy: Always
   service:
     type: LoadBalancer
@@ -46,19 +46,6 @@ backend:
     BASE_URL: http://pakalspot.local
 database:
   enabled: false
-#  statefulSet:
-#    replicaCount: 1
-#  resources:
-#    limits:
-#      cpu: 500m
-#      memory: 1Gi
-#    requests:
-#      cpu: 250m
-#      memory: 512Mi
-#  persistence:
-#    enabled: true
-#    size: 10Gi
-#    accessMode: ReadWriteOnce
 secrets:
   database:
     POSTGRES_PASSWORD: dev_password_secure
