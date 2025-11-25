@@ -53,6 +53,8 @@ ingress:
   enabled: true
 securityContext:
   readOnlyRootFilesystem: false
+  runAsNonRoot: false
+  runAsUser: 0
   capabilities:
     add:
       - NET_BIND_SERVICE
