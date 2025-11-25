@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: dev-65680fd
+    tag: dev-4433e1d
     pullPolicy: Always
   resources:
     limits:
@@ -21,15 +21,13 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: dev-65680fd
+    tag: dev-4433e1d
     pullPolicy: Always
   service:
     type: LoadBalancer
     port: 80
     targetPort: 8000
-    nlbAnnotations:
-      # NLB annotations are automatically added by the template
-      # Additional custom annotations can be added here if needed
+    nlbAnnotations: null
   resources:
     limits:
       cpu: 500m
@@ -65,22 +63,6 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: false
-  # Ingress disabled - using API Gateway + NLB pattern instead
-  # hosts:
-  #   - host: pakalspot.local
-  #     paths:
-  #       - path: /api
-  #         pathType: Prefix
-  #         service: backend
-  #       - path: /media
-  #         pathType: Prefix
-  #         service: backend
-  #       - path: /
-  #         pathType: Prefix
-  #         service: frontend
-  # tls:
-  #   enabled: false
-
 securityContext:
   readOnlyRootFilesystem: false
 autoscaling:
@@ -91,11 +73,8 @@ networkPolicy:
   enabled: false
 monitoring:
   enabled: false
-
 serviceAccount:
   create: true
   automount: true
-  # IRSA role ARN - should be set from Terraform output
-  # Example: irsaRoleArn: "arn:aws:iam::123456789012:role/pakalspot-backend-s3"
-  irsaRoleArn: ""
+  irsaRoleArn: ''
   annotations: {}
