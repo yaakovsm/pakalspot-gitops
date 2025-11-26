@@ -101,7 +101,7 @@ backend:
     API_PREFIX: "/api"
   initContainers:
     dbMigrate:
-      enabled: true
+      enabled: false  # Disabled: Using model mapping instead of migrations to avoid Alembic issues
       command: ["alembic", "upgrade", "head"]
     dbSeed:
       enabled: true
