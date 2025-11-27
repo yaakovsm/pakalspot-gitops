@@ -87,7 +87,7 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: true
-  productionHost: pakalspot.com
+  #productionHost: pakalspot.com
 autoscaling:
   enabled: false
 podDisruptionBudget:
