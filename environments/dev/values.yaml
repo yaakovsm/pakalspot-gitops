@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: dev-336476d
+    tag: dev-d6a3cee
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: dev-336476d
+    tag: dev-d6a3cee
     pullPolicy: Always
   service:
     type: LoadBalancer
@@ -87,7 +87,6 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: true
-  #productionHost: pakalspot.com
 autoscaling:
   enabled: false
 podDisruptionBudget:
