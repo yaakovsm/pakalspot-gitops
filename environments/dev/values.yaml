@@ -87,8 +87,6 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: true
-<<<<<<< HEAD
-=======
   # ACM Certificate ARN for HTTPS termination at ALB
   # Set this value from Terraform output: terraform output -raw acm_pakalspot_cert_arn
   # Leave empty if HTTPS is not yet configured
@@ -96,7 +94,6 @@ ingress:
   # Production host for pakalspot.com domain
   # When set, the ingress will create a rule for this host
   productionHost: pakalspot.com
->>>>>>> de52b25 (added PodMonitor for backend)
 autoscaling:
   enabled: false
 podDisruptionBudget:
