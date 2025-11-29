@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: dev-b897eea
+    tag: dev-a76480c
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: dev-b897eea
+    tag: dev-a76480c
     pullPolicy: Always
   service:
     type: LoadBalancer
@@ -87,12 +87,7 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: true
-  # ACM Certificate ARN for HTTPS termination at ALB
-  # Set this value from Terraform output: terraform output -raw acm_pakalspot_cert_arn
-  # Leave empty if HTTPS is not yet configured
-  certificateArn: ""
-  # Production host for pakalspot.com domain
-  # When set, the ingress will create a rule for this host
+  certificateArn: ''
   productionHost: pakalspot.com
 autoscaling:
   enabled: false
