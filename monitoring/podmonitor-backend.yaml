@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: pakalspot-backend
     app.kubernetes.io/component: monitoring
+    release: kube-prometheus-stack
 spec:
   selector:
     matchLabels:
