@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: k8sfinal-bfb77c1
+    tag: k8sfinal-d2e3959
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: k8sfinal-bfb77c1
+    tag: k8sfinal-d2e3959
     pullPolicy: Always
   service:
     type: LoadBalancer
@@ -102,4 +102,3 @@ serviceAccount:
   automount: true
   irsaRoleArn: ''
   annotations: {}
-
