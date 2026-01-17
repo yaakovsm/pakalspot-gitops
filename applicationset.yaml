@@ -19,6 +19,10 @@ spec:
             namespace: pakalspot-prod
             branch: main
             autoSync: "false"
+          - name: k8sfinal
+            namespace: pakalspot-k8sfinal
+            branch: k8sfinal
+            autoSync: "true"
   template:
     metadata:
       name: "pakalspot-{{name}}"
