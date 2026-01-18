@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: k8sfinal-9e5625c
+    tag: k8sfinal-dc2b666
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: k8sfinal-9e5625c
+    tag: k8sfinal-dc2b666
     pullPolicy: Always
   service:
     type: LoadBalancer
