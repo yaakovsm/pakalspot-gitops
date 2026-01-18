@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: k8sfinal-d2e3959
+    tag: k8sfinal-f4a1488
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: k8sfinal-d2e3959
+    tag: k8sfinal-f4a1488
     pullPolicy: Always
   service:
     type: LoadBalancer
@@ -87,7 +87,7 @@ secrets:
     POSTGRES_PASSWORD: dev_password_secure
 ingress:
   enabled: true
-  certificateArn: 'arn:aws:acm:us-east-1:182399725157:certificate/20ec8b78-356a-4150-a932-82253340f753'
+  certificateArn: arn:aws:acm:us-east-1:182399725157:certificate/20ec8b78-356a-4150-a932-82253340f753
   productionHost: pakalspot.com
 autoscaling:
   enabled: false
