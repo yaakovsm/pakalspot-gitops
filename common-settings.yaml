@@ -61,6 +61,12 @@ backend:
   enabled: true
   image:
     repository: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-backend
+
+# Backend2 configuration - common defaults
+backend2:
+  enabled: false
+  image:
+    repository: 182399725157.dkr.ecr.us-east-1.amazonaws.com/pakalspot-backend
   service:
     type: ClusterIP
     port: 80
