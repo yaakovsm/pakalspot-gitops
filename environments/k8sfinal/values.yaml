@@ -85,7 +85,7 @@ backend2:
   enabled: true
   replicaCount: 1
   image:
-    tag: k8sfinal-d2e3959
+    tag: k8sfinal-bb690c0
     pullPolicy: Always
   service:
     port: 80
