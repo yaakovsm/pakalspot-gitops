@@ -44,7 +44,7 @@ backend:
     ENVIRONMENT: development
     S3_BUCKET: pakalspot-photos
     BASE_URL: http://pakalspot.local
-    BACKEND2_URL: http://pakalspot-backend2:80
+    BACKEND2_URL: http://pakalspot-k8sfinal-pakalspot-chart-backend2:80
   initContainers:
     dbMigrate:
       enabled: true
