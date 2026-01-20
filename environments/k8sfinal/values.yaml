@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: k8sfinal-dc2b666
+    tag: k8sfinal-bb690c0
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: k8sfinal-dc2b666
+    tag: k8sfinal-bb690c0
     pullPolicy: Always
   service:
     type: LoadBalancer
@@ -44,7 +44,7 @@ backend:
     ENVIRONMENT: development
     S3_BUCKET: pakalspot-photos
     BASE_URL: http://pakalspot.local
-    BACKEND2_URL: 'http://pakalspot-backend2:80'
+    BACKEND2_URL: http://pakalspot-backend2:80
   initContainers:
     dbMigrate:
       enabled: true
