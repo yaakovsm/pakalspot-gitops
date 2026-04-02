@@ -7,7 +7,7 @@ global:
 frontend:
   replicaCount: 1
   image:
-    tag: dev-0f0b9b0
+    tag: dev-6d12653
     pullPolicy: Always
   resources:
     limits:
@@ -21,7 +21,7 @@ frontend:
 backend:
   replicaCount: 1
   image:
-    tag: dev-0f0b9b0
+    tag: dev-6d12653
     pullPolicy: Always
   service:
     type: LoadBalancer
